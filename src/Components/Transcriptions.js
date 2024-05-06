@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Transcriptions.css';
+import Options from './Options';
 
 function Transcription() {
   const [status, setStatus] = useState('Connection status will go here');
@@ -92,39 +93,28 @@ function Transcription() {
     return () => clearInterval(wpmId);
   }, [startTime, transcriptLines]);
 
-return (
-  <div>
-    <p id="status" className="status">{status}</p>
-    <div id="menu" className="menu">
-      <button id="extend-button" className="menu-button" onClick={() => setCascadeMenuVisible(!cascadeMenuVisible)}>Extend</button>
-      {cascadeMenuVisible && (
-        <div id="cascade-menu">
-          <button><a href="/static/docdisplay.html">Docs</a></button>
-          <button><a href="/static/datadisplay.html">Graphs</a></button>
-        </div>
-      )}
-      <div style={{textAlign: "right"}}>
-        <span title="Total characters" style={{display: "inline"}}>
-          <div id="counter">{counter}</div>
-        </span>
-        <span title="Click to pause timer" className="menuitem" style={{marginRight: "0.5em", display: "inline-block"}}>
-          <div id="timer">{timer}</div>
-        </span>
-        <span title="Words per minute" style={{display: "inline"}}>
-          <div id="wpm">{wpm}</div>
-        </span>
-      </div>
-    </div>
-    <div id="wrapper" className="wrapper">
-      <div id="container" className="container">
-        <div id="transcript-container" className="transcript-container">
-          {transcriptLines.map((line, index) => (
-            <p key={index} className="transcript-line">{line}</p>
-          ))}
+  return (
+    <div>
+      <p id="status" className="status">{status}</p>
+      <Options 
+        status={status}
+        counter={counter}
+        timer={timer}
+        wpm={wpm}
+        cascadeMenuVisible={cascadeMenuVisible}
+        setCascadeMenuVisible={setCascadeMenuVisible}
+      />
+      <div id="wrapper" className="wrapper">
+        <div id="container" className="container">
+          <div id="transcript-container" className="transcript-container">
+            {transcriptLines.map((line, index) => (
+              <p key={index} className="transcript-line">{line}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
+
 export default Transcription;

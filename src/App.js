@@ -1,12 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import DataDisplay from './Components/DataDisplay';
+//import DocDisplay from './Components/DocDisplay';
 import Transcription from './Components/Transcriptions';
-
+import FileUpload from './Components/FileUpload';
 
 function App() {
   return (
-    <div className="App">
-      <Transcription />
-    </div>
+    <Router>
+        <Routes>
+        <Route path="/" element={<Transcription />} />
+
+        <Route path="/datadisplay" component={DataDisplay} />
+        <Route path="/fileupload" element={<FileUpload />} />
+        {/* <Route path="/docdisplay" component={DocDisplay} /> */}
+      </Routes>
+    </Router>
   );
 }
 
