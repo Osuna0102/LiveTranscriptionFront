@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Transcriptions.css';
+import { Root } from './TranscriptionStyles';
+import Status from './Status';
 import Options from './Options';
+import Transcript from './Transcript';
 
 function Transcription() {
   const [status, setStatus] = useState('Connection status will go here');
@@ -8,7 +10,6 @@ function Transcription() {
   const [timer, setTimer] = useState('Time: 0:00');
   const [wpm, setWpm] = useState('WPM: 0');
   const [transcriptLines, setTranscriptLines] = useState([]);
-  const [cascadeMenuVisible, setCascadeMenuVisible] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
 
   const socketRef = useRef(null);
@@ -17,7 +18,8 @@ function Transcription() {
   useEffect(() => {
     console.log('Transcription mounted');
 
-    socketRef.current = new WebSocket('wss://livetranscription.onrender.com/listen');
+    //socketRef.current = new WebSocket('wss://livetranscription.onrender.com/listen');
+    socketRef.current = new WebSocket('ws://127.0.0.1:8000/listen');
 
     socketRef.current.onopen = async () => {
       console.log('WebSocket connection opened');
@@ -94,26 +96,16 @@ function Transcription() {
   }, [startTime, transcriptLines]);
 
   return (
-    <div>
-      <p id="status" className="status">{status}</p>
+    <Root>
+      <Status status={status} />
       <Options 
         status={status}
         counter={counter}
         timer={timer}
         wpm={wpm}
-        cascadeMenuVisible={cascadeMenuVisible}
-        setCascadeMenuVisible={setCascadeMenuVisible}
       />
-      <div id="wrapper" className="wrapper">
-        <div id="container" className="container">
-          <div id="transcript-container" className="transcript-container">
-            {transcriptLines.map((line, index) => (
-              <p key={index} className="transcript-line">{line}</p>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+      <Transcript transcriptLines={transcriptLines} />
+    </Root>
   );
 }
 

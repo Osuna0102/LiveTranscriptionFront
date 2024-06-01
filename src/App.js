@@ -4,6 +4,7 @@ import DataDisplay from './Components/DataDisplay';
 //import DocDisplay from './Components/DocDisplay';
 import Transcription from './Components/Transcriptions';
 import FileUpload from './Components/FileUpload';
+import Login from './Components/Login';
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
 
         <Route path="/datadisplay" component={DataDisplay} />
         <Route path="/fileupload" element={<FileUpload />} />
+        <Route path="/Login" element={<Login />} />
+
         {/* <Route path="/docdisplay" component={DocDisplay} /> */}
       </Routes>
     </Router>
